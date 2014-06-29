@@ -20,7 +20,7 @@ public class C {
 	private static Typeface georgiaTypeface; 
 
 	public static String TAG 		 = "AndroBlip";
-	public static int LOGLVL 		 = 0;
+	public static int LOGLVL 		 = 11;
 	public static boolean VERBOSE 	 = LOGLVL > 10;
 	public static boolean DEBUG   	 = LOGLVL > 5;
 	public static boolean MIN     	 = LOGLVL > 0;
