@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="pref_notifycomment"
+        android:summary="@string/pref_notifycomment_sum"
+        android:title="@string/pref_notifycomment" />
+
+    <ListPreference
+        android:entries="@array/frequencieNames"
+        android:entryValues="@array/frequencieValues"
+        android:key="notify_frequency"
+        android:summary="Update every...."
+        android:title="Notification check frequency"
+        android:defaultValue="1"
+        />
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="pref_useautosave"
+        android:summary="@string/pref_useautosave_sum"
+        android:title="@string/pref_useautosave" />
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="pref_usedisccache"
+        android:summary="@string/pref_usedisccache_sum"
+        android:title="@string/pref_usedisccache" />
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="pref_usememcache"
+        android:summary="@string/pref_usememcache_sum"
+        android:title="@string/pref_usememcache" />
+    
+     <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="pref_markasread"
+        android:summary="@string/pref_markasread_sum"
+        android:title="@string/pref_markasread" />
+    
+    <com.huiges.AndroBlip.OrderPreference
+        android:key="pref_bla"
+        android:summary="@string/pref_order_sum"
+        android:title="@string/pref_order" 
+        />    
+    
+</PreferenceScreen>

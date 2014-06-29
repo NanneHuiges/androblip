@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="General">
+        <item name="android:textColor">@color/text</item>
+        <item name="android:background">@color/window_background</item>
+        <item name="android:textColorLink">@color/link</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="General.Layout">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="General.Layout.Label">
+        <item name="android:paddingBottom">5sp</item>
+        <item name="android:paddingTop">10sp</item>
+    </style>
+
+    <style name="General.Layout.Error">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/error</item>
+    </style>
+
+    <style name="General.Layout.Scroll">
+        <item name="android:paddingTop">14sp</item>
+        <item name="android:paddingLeft">8sp</item>
+        <item name="android:paddingRight">8sp</item>
+    </style>
+
+    <style name="General.Layout.Title">
+        <item name="android:textColor">@color/text_title</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="General.Layout.Title.Sub">
+        <item name="android:paddingTop">14sp</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="General.Layout.Author">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="General.Layout.Icon">
+        <item name="android:textColor">@color/text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_width">14sp</item>
+        <item name="android:layout_height">14sp</item>
+        <item name="android:paddingLeft">5sp</item>
+    </style>
+    
+    <style name="General.Layout.EntryOptions">
+        <item name="android:textColor">@color/text</item>
+        <item name="android:background">@color/entry_img_bg</item>
+        <item name="android:textSize">33sp</item>
+        <item name="android:layout_width">33sp</item>
+        <item name="android:layout_height">33sp</item>
+        <item name="android:paddingLeft">5sp</item>
+    </style>
+
+    <style name="General.Layout.Ruler">
+        <item name="android:background">@color/ruler_default</item>
+        <item name="android:layout_height">1sp</item>
+    </style>
+
+    <style name="General.Layout.SeparatorEntry">
+        <item name="android:background">@color/ruler_default</item>
+        <item name="android:layout_height">1sp</item>
+    </style>
+
+    <style name="General.Layout.SeparatorL">
+        <item name="android:background">@color/separator</item>
+        <item name="android:layout_width">1sp</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:paddingLeft">5sp</item>
+    </style>
+
+    <style name="General.Layout.SeparatorP">
+        <item name="android:background">@color/separator</item>
+        <item name="android:layout_height">1sp</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:paddingTop">5sp</item>
+    </style>
+
+    <style name="General.Layout.Time">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="General.Thumb">
+        <item name="android:layout_width">80sp</item>
+        <item name="android:layout_height">80sp</item>
+        <item name="android:background">@color/border_thumb</item>
+        <item name="android:padding">3sp</item>
+    </style>
+
+    <style name="General.Layout.NotificationBar">
+        <item name="android:background">@color/notification_background</item>
+        <item name="android:textColor">@color/notification_text</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:padding">3sp</item>
+    </style>
+
+</resources>

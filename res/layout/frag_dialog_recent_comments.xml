@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#777777"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/loadingComments"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ProgressBar
+            android:id="@+id/pbHeaderProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent" >
+        </ProgressBar>
+    </LinearLayout>
+
+    <com.huiges.AndroBlip.views.FormattedTextView
+        style="@style/General.Layout.Title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/title_newcomments"
+        android:padding="7dp"/>
+
+    <ListView
+        android:id="@+id/newcommentslist"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/window_background"
+        android:fillViewport="true" >
+
+        <!-- android:background="#777777" -->
+    </ListView>
+
+</LinearLayout>

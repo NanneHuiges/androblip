@@ -1,0 +1,35 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/General.Layout.Scroll"
+    android:orientation="vertical" 
+    android:id="@+id/entry_comment_add">
+
+    <com.huiges.AndroBlip.views.FormattedTextView
+        android:id="@+id/formTitleLabel"
+        style="@style/General.Layout.Label"
+        android:text="@string/formlabel_comment" />
+
+    <LinearLayout
+        style="@style/General.Layout.Scroll"
+        android:layout_width="fill_parent"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/formComment"
+            android:layout_width="0dip"
+            android:hint="@string/formcomment_hint"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+        <com.huiges.AndroBlip.views.FormattedTextView
+            android:id="@+id/entry_add_comment_post"
+            style="@style/General.Layout.SelectItem.Entry"
+            android:layout_width="wrap_content"
+            android:background="@android:drawable/list_selector_background"
+            android:focusable="true" />
+    </LinearLayout>
+
+    <View
+        style="@style/General.Layout.SeparatorEntry"
+        android:layout_marginBottom="3sp" />
+
+</LinearLayout>

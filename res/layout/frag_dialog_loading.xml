@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/General.Layout"
+    android:padding="30sp"
+    >
+
+    <com.huiges.AndroBlip.views.FormattedTextView
+        android:id="@+id/loading_text"
+        style="@style/General.Layout.Title" />
+
+</LinearLayout>

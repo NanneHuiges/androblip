@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="General.Layout.EntryItems">
+        <item name="android:paddingTop">10sp</item>
+    </style>
+
+    <style name="General.Layout.Journal">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="General.Layout.EntryItems.ImgWrap">
+        <item name="android:padding">5sp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_marginBottom">4sp</item>
+        <item name="android:layout_marginTop">4sp</item>
+        <item name="android:background">@color/entry_img_bg</item>
+    </style>
+
+    <style name="General.Layout.EntryItems.Img">
+        <item name="android:padding">0sp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_marginBottom">0sp</item>
+        <item name="android:layout_marginTop">0sp</item>
+        <item name="android:background">@color/entry_img_bg</item>
+    </style>
+
+    <style name="General.Layout.CommentReply">
+        <item name="android:paddingLeft">32dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_marginBottom">0sp</item>
+        <item name="android:layout_marginTop">0sp</item>
+        <item name="android:layout_marginLeft">32dp</item>
+    </style>
+
+    <style name="General.Layout.FormField">
+        <item name="android:background">@color/form_field</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:padding">2sp</item>
+    </style>
+
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        style="@style/General.Layout.Scroll"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/new_comment_item_thumb"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
+
+        <com.huiges.AndroBlip.views.FormattedTextView
+            android:id="@+id/new_comment_item_content"
+            style="@style/General.Layout.EntryItems"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/General.Layout.Scroll"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/new_comment_item_user"
+            style="@style/General.Layout.Author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/new_comment_iconcontainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+    </LinearLayout>
+
+    <View
+        style="@style/General.Layout.SeparatorEntry"
+        android:layout_marginTop="2dp" />
+
+</LinearLayout>

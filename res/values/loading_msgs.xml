@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="loading">
+		<item>"Did you backup your photos today?"</item>
+		<item>"Check out /nh ;)"</item>
+		<item>"Check out /uzar ;)"</item>
+		<item>"Common sense isn\'t very common or sensible."</item>
+		<item>"Extraordinary claims require extraordinary evidence"</item>
+		<item>"Big thanks to the Blipfoto crew :)"</item>
+		<item>"There\'s no place like 127.0.0.1"</item>
+		<item>"Being paranoid doesn\'t mean nobody\'s following you.."</item>
+		<item>"Every base is base 10"</item>
+		
+		<item>"I wonder how the one-rater is nowadays?"</item>
+		<item>"Its photography Jim, but not as we know it"</item>
+		<item>"Blip or it didn\'t happen."</item>
+		<item>"Borders are for other people."</item>
+		<item>"It's 23:50. Do you know where your blip is?"</item>
+		<item>"My other lens is a 70-200mm f/2.8L IS II USM"</item>
+		<item>"I'm a photographer, not a terrorist."</item>
+		<item>"+1"</item>
+		<item>"Shout out to /gbradley"</item>
+		<item>"Once a day! ;D"</item>
+		<item>"Never gonna give you up...."</item>
+		<item>"Never attribute to malice that which is adequately explained by stupidity."</item>	
+		<item>"This witty quote is not available in your country."</item>
+	</string-array>
+</resources>

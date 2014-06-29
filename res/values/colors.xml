@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <color name="text">#C9C9C9</color>
+    <color name="text_title">#FFFFFF</color>
+    <color name="link">#F2E6B0</color>
+    <color name="notification_background">#F2E6B0</color>
+    <color name="notification_text">#555555</color>
+    <color name="window_background">#666666</color>
+    <color name="border_thumb">#777777</color>
+    <color name="ruler_default">#777777</color>
+    <color name="ruler_new">#999999</color>
+    <color name="separator">#000000</color>
+    <color name="item_bg_disabled">#555555</color>
+    <color name="dialog_select_item_bg">#777777</color>
+    <color name="entry_extras_item_bg">#777777</color>
+    <color name="comment_nav_item_bg">#666666</color>
+    <color name="comment_nav_bg">#555555</color>
+    <color name="entry_img_bg">#222222</color>
+    <color name="black_overlay">#66000000</color>
+	<color name="error">#F2E6B0</color>
+	
+ 	<color name="form_field">#999999</color>
+	
+	
+</resources>

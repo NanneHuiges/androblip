@@ -1,0 +1,140 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/upload_form"
+    style="@style/General.Layout.Scroll"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <LinearLayout
+        style="@style/General.Layout"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/postEntryContainerForm"
+            style="@style/General.Layout"
+            tools:context=".ActivityUpload" >
+
+            <Button
+                android:id="@+id/choose_picture"
+                android:layout_width="100dip"
+                android:layout_height="wrap_content"
+                android:text="choose" />
+
+            <Button
+                android:id="@+id/make_picture"
+                android:layout_width="100dip"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/choose_picture"
+                android:text="take" />
+
+            <RelativeLayout
+                android:id="@+id/wrap_prev_img"
+                style="@style/General.Layout.EntryItems.ImgWrap"
+                android:layout_below="@+id/make_picture"
+                android:visibility="gone" >
+
+                <com.huiges.AndroBlip.views.ResizeImageView
+                    android:id="@+id/preview_image"
+                    style="@style/General.Layout.EntryItems.Img"
+                    android:layout_centerHorizontal="true" />
+            </RelativeLayout>
+
+            <LinearLayout
+                style="@style/General.Layout.Scroll"
+                android:layout_below="@+id/wrap_prev_img"
+                android:orientation="vertical" >
+
+                <com.huiges.AndroBlip.views.FormattedTextView
+                    android:id="@+id/postEntryResult"
+                    style="@style/General.Layout.Error"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+                
+                <com.huiges.AndroBlip.views.FormattedTextView
+		        	android:id="@+id/formUsePrevious"   
+					style="@style/General.Layout.NotificationBar" 
+					android:visibility="gone"
+					android:text="@string/autosavemsg"	/>	    
+
+                <com.huiges.AndroBlip.views.FormattedTextView
+                    android:id="@+id/formTitleLabel"
+                    style="@style/General.Layout.Label"
+                    android:text="Title:" />
+
+                <EditText
+                    android:id="@+id/formTitle"
+                    style="@style/General.Layout.FormField"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
+
+                <com.huiges.AndroBlip.views.FormattedTextView
+                    android:id="@+id/formDescLabel"
+                    style="@style/General.Layout.Label"
+                    android:text="Description:" />
+
+                <EditText
+                    android:id="@+id/formDescr"
+                    style="@style/General.Layout.FormField"
+                    android:layout_width="fill_parent"
+                    android:layout_height="120sp"
+                    android:gravity="top" />
+
+                <com.huiges.AndroBlip.views.FormattedTextView
+                    android:id="@+id/formTagsLabel"
+                    style="@style/General.Layout.Label"
+                    android:text="Tags (comma seperated):" />
+
+                <EditText
+                    android:id="@+id/formTags"
+                    style="@style/General.Layout.FormField"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="showDatePickerDialog"
+                    android:text="@string/pick_date" />
+
+                <LinearLayout
+                    style="@style/General.Layout.Label"
+                    android:orientation="horizontal" >
+
+                    <com.huiges.AndroBlip.views.FormattedTextView
+                        android:id="@+id/formDatePrepend"
+                        style="@style/General"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <com.huiges.AndroBlip.views.FormattedTextView
+                        android:id="@+id/formDate"
+                        style="@style/General"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/defaultdatemsg" />    
+				</LinearLayout>
+				
+				<ProgressBar
+                    android:id="@+id/uploadProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" 
+                    android:visibility="gone" />
+               		
+				<Button
+                    android:id="@+id/button_sendblip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_sendblip"
+                    android:visibility="gone" />
+				
+				<com.huiges.AndroBlip.views.FormattedTextView
+                        android:id="@+id/currentAction"
+                        style="@style/General"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>    
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+</ScrollView>

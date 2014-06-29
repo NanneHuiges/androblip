@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="DrawAllocation">
+        <ignore path="src/com/huiges/androblip/views/FlowTextView.java" />
+    </issue>
+    <issue id="FloatMath">
+        <ignore path="src/com/handmark/pulltorefresh/library/PullToRefreshWebView.java" />
+    </issue>
+</lint>

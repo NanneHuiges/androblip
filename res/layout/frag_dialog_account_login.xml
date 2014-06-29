@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrllvwNo3"
+    style="@style/General.Layout"
+    android:layout_height="fill_parent"
+    android:fillViewport="true" >
+
+    <LinearLayout
+        style="@style/General.Layout.Scroll"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="8sp" >
+
+        <com.huiges.AndroBlip.views.FormattedTextView
+            android:id="@+id/login_title"
+            style="@style/General.Layout.Title"
+            android:layout_width="wrap_content" />
+
+        <com.huiges.AndroBlip.views.FormattedTextView
+            android:id="@+id/login_introtxt"
+            style="@style/General.Layout.Title.Sub"
+            android:layout_width="wrap_content" />
+
+        <com.huiges.AndroBlip.views.FormattedTextView
+            android:id="@+id/login_explainbullets"
+            style="@style/General.Layout"
+            android:layout_width="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/prefsTempToken"
+                android:layout_width="100dip"
+                android:layout_height="fill_parent"
+                android:hint="6 Chars"
+                android:inputType="textCapCharacters" />
+
+            <Button
+                android:id="@+id/token_button"
+                android:layout_width="100dip"
+                android:layout_height="wrap_content"
+                android:text="@string/login_button" />
+        </LinearLayout>
+
+        <com.huiges.AndroBlip.views.FormattedTextView
+            android:id="@+id/login_moreinfo"
+            style="@style/General.Layout.Label"
+            android:layout_width="wrap_content" />
+    </LinearLayout>
+
+</ScrollView>

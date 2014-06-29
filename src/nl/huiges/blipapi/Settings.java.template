@@ -1,0 +1,11 @@
+package nl.huiges.blipapi;
+
+/**
+ * 
+ * @author Nanne Huiges
+ *
+ */
+public class Settings {
+	public static final String API_KEY    = "";
+	public static final String API_SECRET = "";
+}

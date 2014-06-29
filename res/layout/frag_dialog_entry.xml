@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrllvwNo3"
+    style="@style/General.Layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    android:minWidth="1000dp" >
+
+    <LinearLayout
+        style="@style/General.Layout.Scroll"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="8sp" >
+
+        <RelativeLayout
+            android:id="@+id/entryrellay1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <com.huiges.AndroBlip.views.FormattedTextView
+                android:id="@+id/entry_date"
+                style="@style/General.Layout"
+                android:layout_width="wrap_content"
+                android:layout_alignBaseline="@+id/entry_journal_title"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="10sp"
+                android:textStyle="italic" />
+
+            <com.huiges.AndroBlip.views.FormattedTextView
+                android:id="@+id/entry_journal_title"
+                style="@style/General.Layout.Journal"
+                android:layout_width="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/entry_date" />
+        </RelativeLayout>
+
+        <RelativeLayout style="@style/General.Layout.EntryItems.ImgWrap" >
+
+            <com.huiges.AndroBlip.views.ResizeImageView
+                android:id="@+id/entry_image"
+                style="@style/General.Layout.EntryItems.Img"
+                android:layout_centerHorizontal="true" />
+
+            <LinearLayout
+                style="@style/General.Layout"
+                android:layout_width="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/entry_image"
+                android:layout_gravity="right"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/entry_subscribe"
+                    style="@style/General.Layout.EntryOptions"
+                    android:contentDescription="@string/subscribeimage"
+                    android:visibility="gone" />
+
+                <ProgressBar
+                    android:id="@+id/entry_subspin"
+                    style="@style/General.Layout.EntryOptions"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/entry_favourite"
+                    style="@style/General.Layout.EntryOptions"
+                    android:contentDescription="@string/favouriteimage"
+                    android:src="@drawable/favourite"
+                    android:visibility="gone" />
+
+                <ProgressBar
+                    android:id="@+id/entry_favspin"
+                    style="@style/General.Layout.EntryOptions"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <com.huiges.AndroBlip.views.FormattedTextView
+            android:id="@+id/entry_title"
+            style="@style/General.Layout.Title" />
+
+        <com.huiges.AndroBlip.views.FormattedTextView
+            android:id="@+id/entry_desc"
+            style="@style/General.Layout.EntryItems"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingBottom="30sp" />
+
+        <com.huiges.AndroBlip.views.FormattedTextView
+            android:id="@+id/entry_views"
+            style="@style/General.Layout"
+            android:paddingBottom="15sp"
+            android:textStyle="italic" />
+
+        <View
+            android:id="@+id/separator_context_comments"
+            style="@style/General.Layout.SeparatorEntry"
+            android:layout_marginBottom="3sp" />
+
+        <LinearLayout
+            style="@style/General.Layout"
+            android:orientation="horizontal" >
+
+            <com.huiges.AndroBlip.views.FormattedTextView
+                android:id="@+id/entry_show_comments"
+                style="@style/General.Layout.SelectItem.Entry"
+                android:layout_weight="1"
+                android:background="@android:drawable/list_selector_background"
+                android:focusable="true" />
+
+            <com.huiges.AndroBlip.views.FormattedTextView
+                android:id="@+id/entry_add_comment"
+                style="@style/General.Layout.SelectItem.Entry"
+                android:layout_weight="1"
+                android:background="@android:drawable/list_selector_background"
+                android:focusable="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/entry_comment_container"
+            style="@style/General.Layout"
+            android:orientation="vertical" >
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

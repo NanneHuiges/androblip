@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="General.Layout.SelectItem">
+		<item name="android:padding">8sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:focusable">true</item>
+	</style>
+	<style name="General.Layout.SelectItem.Dialog">
+		<item name="android:background">@color/dialog_select_item_bg</item>	
+	</style>
+	<style name="General.Layout.SelectItem.Entry">
+		<item name="android:background">@color/entry_extras_item_bg</item>	
+	</style>
+	<style name="General.Layout.SelectItem.Comment">
+		<item name="android:paddingBottom">4sp</item>
+		<item name="android:paddingLeft">8sp</item>
+		<item name="android:paddingRight">8sp</item>
+		<item name="android:paddingTop">4sp</item>
+		<item name="android:background">@color/comment_nav_item_bg</item>
+		<item name="android:layout_height">fill_parent</item>
+		<item name="android:layout_weight">1</item>
+	</style>
+	<style name="SelectLayoutDialog">
+		<item name="android:background">@color/dialog_select_item_bg</item>
+    	<item name="android:layout_width">wrap_content</item>
+    	<item name="android:layout_height">wrap_content</item>
+	</style>
+	<style name="SelectLayoutComment">
+		<item name="android:background">@color/comment_nav_item_bg</item>
+    	<item name="android:layout_width">wrap_content</item>
+    	<item name="android:layout_height">fill_parent</item>
+		<item name="android:layout_weight">1</item>
+	</style>
+	<style name="SelectLayoutEntry">
+		<item name="android:background">@color/dialog_select_item_bg</item>
+    	<item name="android:layout_width">wrap_content</item>
+    	<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_weight">1</item>
+	</style>
+</resources>

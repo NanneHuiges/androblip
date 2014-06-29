@@ -1,0 +1,5 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/entry_comment_reply_container"
+    style="@style/General.Layout.CommentReply"
+    android:orientation="vertical"
+    />
