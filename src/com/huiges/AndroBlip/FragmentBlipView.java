@@ -41,6 +41,8 @@ public class FragmentBlipView extends Fragment {
 
 		ptr_gridview.setOnItemClickListener(new OnItemClickListener() {
 	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+				new DFragmentLoading()
+				  .show( getActivity().getSupportFragmentManager() , DFragmentLoading.TAG_DEFAULTTAG);
 	        	ViewItemWAO bvi = (ViewItemWAO) parent.getItemAtPosition(position);
 	        	(new BlipEntry(getActivity().getApplicationContext())).updateEntry((iAPIResultFragmentReceiver) getActivity(), bvi.getEntry_id(), null);       
 	        }

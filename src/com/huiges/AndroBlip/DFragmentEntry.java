@@ -45,6 +45,11 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+/**
+ * Fragment for blipfoto entry.
+ * Based on dialog, so behaves as 'popup'
+ *
+ */
 public class DFragmentEntry extends DialogFragment implements iAPIResultFragment, iAPIResultReceiver{
 	private EntryWAO entry;
 	private ScrollView mainView;
@@ -74,10 +79,11 @@ public class DFragmentEntry extends DialogFragment implements iAPIResultFragment
 		dismissableFragmentTag = disTag;
 	}
 
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		if(C.VERBOSE){Log.d(C.TAG,"onCreateView");}
+		if(C.VERBOSE){Log.d(C.TAG,"onCreateView dfragmententry");}
 		setRetainInstance(true);
 		this.inflater = inflater;
 		this.container = container;
@@ -424,11 +430,13 @@ public class DFragmentEntry extends DialogFragment implements iAPIResultFragment
 
 	@Override
 	public void showFromResult(iAPIResultFragmentReceiver activity, String result) {
+		if(C.VERBOSE){Log.d(C.TAG,"Going to create from JSON: "+result);}
+
 		entry = new EntryWAO();
 		try {
 			entry.entryFromJSONString(result);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+			if(C.VERBOSE){Log.d(C.TAG,"Could not create from JSON: "+result);}
 		}
 		activity.addFragment(this, DFragmentLoading.TAG_ENTRYTAGPREFIX+entry.getEntry_id());
 		//this.show(activity.getSupportFragmentManager(),DFragmentLoading.TAG_ENTRYTAGPREFIX+entry.getEntry_id());
