@@ -23,6 +23,8 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -110,8 +112,9 @@ public class DFragmentEntry extends DialogFragment implements iAPIResultFragment
 	}
 	
 	private void removeOtherDiags(){
-		 Fragment prev; 
-		 prev  = getActivity().getSupportFragmentManager().findFragmentByTag(DFragmentLoading.TAG_DEFAULTTAG);
+		 FragmentActivity acti = getActivity();
+		 FragmentManager fragman = acti.getSupportFragmentManager();
+		 Fragment prev = fragman.findFragmentByTag(DFragmentLoading.TAG_DEFAULTTAG);
 		if (prev != null) {
 			DialogFragment df = (DialogFragment) prev;
 			df.dismiss();
@@ -433,12 +436,14 @@ public class DFragmentEntry extends DialogFragment implements iAPIResultFragment
 		if(C.VERBOSE){Log.d(C.TAG,"Going to create from JSON: "+result);}
 
 		entry = new EntryWAO();
-		try {
-			entry.entryFromJSONString(result);
-		} catch (JSONException e) {
-			if(C.VERBOSE){Log.d(C.TAG,"Could not create from JSON: "+result);}
+		entry.entryFromJSONString(result);
+
+		if (! entry.hasError() ){
+			activity.addFragment(this, DFragmentLoading.TAG_ENTRYTAGPREFIX+entry.getEntry_id());
+		} else {
+			if(C.VERBOSE){Log.d(C.TAG,"Entry didn't load");}
+			activity.failed();
 		}
-		activity.addFragment(this, DFragmentLoading.TAG_ENTRYTAGPREFIX+entry.getEntry_id());
 		//this.show(activity.getSupportFragmentManager(),DFragmentLoading.TAG_ENTRYTAGPREFIX+entry.getEntry_id());
 	}
 

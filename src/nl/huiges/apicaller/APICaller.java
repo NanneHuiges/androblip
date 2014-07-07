@@ -186,6 +186,12 @@ public abstract class APICaller extends AsyncTask<Void, Integer, String>{
 		return this.call(req);
 	}
 	
+	/**
+	 * 
+	 * @return
+	 * @throws MalformedURLException
+	 * @throws URISyntaxException
+	 */
 	protected boolean doGet() throws MalformedURLException, URISyntaxException{
 		Uri.Builder builder = getBuilder();
 		Uri semiUri = builder.build();

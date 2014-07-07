@@ -78,6 +78,18 @@ public class BlipComments extends BlipAPI implements iAPIResultReceiver {
 	}
 
 	private Bundle parseResult(Bundle extras){
+		if(extras == null){
+			if(C.VERBOSE){Log.d(C.TAG,"extras is null. not good.");}
+			extras = new Bundle();
+		}
+		if (extras.getString(APICaller.RESULT) == null ){
+			if(C.VERBOSE){Log.d(C.TAG,"extras is null. not good.");}
+			extras.putBoolean(ERROR, true);
+			extras.putString(ERRORSTRING, "unspecified error. Sorry :(" );
+			return extras;			
+		}
+		
+		
 		try {
 			JSONObject result = new JSONObject(extras.getString(APICaller.RESULT));
 			if(result.has("error") && !result.isNull("error")){
@@ -110,7 +122,7 @@ public class BlipComments extends BlipAPI implements iAPIResultReceiver {
 				}
 			}		
 		} catch (Exception e) {
-			if(C.VERBOSE){Log.e(C.TAG,"4Exception in blipnotification signal: "+e);}
+			if(C.VERBOSE){Log.e(C.TAG,"4Exception in blipnotification signal: "+e.getMessage());}
 			extras.putBoolean(ERROR, true);
 			extras.putString(ERRORSTRING, "unspecified error. Sorry :(" );
 		}

@@ -393,4 +393,15 @@ public class ActivityMain extends FragmentActivity implements iAPIResultFragment
 			setDrawerItems();
 		}
 	}
+
+	@Override
+	public void failed() { //FIXME beter name
+		 FragmentManager fragman = getSupportFragmentManager();
+		 Fragment prev = fragman.findFragmentByTag(DFragmentLoading.TAG_DEFAULTTAG);
+		if (prev != null) {
+			DialogFragment df = (DialogFragment) prev;
+			df.dismiss();
+		}	
+		//FIXME show error
+	}
 }
