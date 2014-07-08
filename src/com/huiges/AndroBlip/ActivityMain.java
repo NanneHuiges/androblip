@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
@@ -31,6 +32,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.cache.disc.impl.TotalSizeLimitedDiscCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -395,12 +397,16 @@ public class ActivityMain extends FragmentActivity implements iAPIResultFragment
 	}
 
 	@Override
-	public void showError() {
+	public void showError(CharSequence message) {
 		 Fragment prev = getSupportFragmentManager().findFragmentByTag(DFragmentLoading.TAG_DEFAULTTAG);
 		if (prev != null) {
 			DialogFragment df = (DialogFragment) prev;
 			df.dismiss();
 		}	
-		//FIXME show error
+
+		Toast t = Toast.makeText(this, message , Toast.LENGTH_LONG);
+		View view = t.getView();
+		view.setBackgroundColor(Color.argb(150, 255, 0, 0));
+		t.show();
 	}
 }

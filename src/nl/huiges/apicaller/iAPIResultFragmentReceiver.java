@@ -9,6 +9,8 @@ public interface iAPIResultFragmentReceiver {
 	/**
 	 * Handles an error situation.
 	 * (no network, unexpected result, etc)
+	 * 
+	 * @param message
 	 */
-	public void showError();
+	public void showError(CharSequence message);
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import nl.huiges.apicaller.iAPIResultReceiver;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
@@ -12,6 +13,9 @@ import android.text.Html;
 import android.text.Spannable;
 import android.text.Spanned;
 import android.text.style.URLSpan;
+import android.util.Log;
+
+import com.huiges.AndroBlip.C;
 
 /**
  * 
@@ -269,10 +273,32 @@ public class EntryWAO {
 	/************end actions***************/
 
 	public void entryFromJSONString(String result)  {
-		try{
-			JSONObject entryO = new JSONObject(result);
-			// @TODO error check.
+		if( result == null || result.isEmpty() ){
+			setError("Empty result: network issue?");
+			return;
+		}
+		
+		
+		JSONObject entryO;
+		try {
+			entryO = new JSONObject(result);
+		} catch (JSONException e) {
+			setError("Received data in unkown format.");
+			return;
+		}
+		
+		JSONObject error = entryO.optJSONObject("error");
+		if( error != null){
+			String errormsg = error.optString("message");
+			if (errormsg.isEmpty()){
+				errormsg = "Blipfoto returned an empty error";
+			}
+			setError(errormsg);
+			return;	
+		}
 
+		
+		try {
 			JSONObject data = (JSONObject) entryO.getJSONObject("data");
 			setEntry_id(data.getString("entry_id"));
 			setDisplay_name(data.getString("display_name"));
@@ -289,12 +315,12 @@ public class EntryWAO {
 			setRating_count(data.getInt("rating_count"));
 			//setTags(data.getString("tags"));
 			setViews(data.getInt("views"));
-
+	
 			//TODO only if extended is actually requested?
 			if(data.has("extended") && data.getJSONObject("extended").has("raw_descripiton")){
 				setRaw_description(data.getJSONObject("extended").getString("raw_description"));
 			}
-
+	
 			if(data.has("actions")){
 				JSONObject actions = data.getJSONObject("actions");
 				setComment(actions.getInt("comment"));
@@ -306,17 +332,16 @@ public class EntryWAO {
 				setModify(actions.getInt("modify"));
 				setDelete(actions.getInt("delete"));
 			}
-
+	
 			if(data.has("ids")){
 				JSONObject ids = data.getJSONObject("ids");
 				setNext(ids.getString("next"));
 				setPrev(ids.getString("previous"));
 			}
-
+	
 			setComments(EntryCommentWAO.entryListFromJSONString(data));
-		} catch (Exception pokemon) {//gotta catch em all 
-			//TODO remove pokemon exception
-			setError("Entry didn't contain all we expected. Exiting. Sorry");
+		} catch (JSONException e) {
+			if(C.VERBOSE){Log.d(C.TAG,"edrror");}
 		}
 	}
 

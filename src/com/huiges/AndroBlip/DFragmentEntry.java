@@ -442,7 +442,7 @@ public class DFragmentEntry extends DialogFragment implements iAPIResultFragment
 			activity.addFragment(this, DFragmentLoading.TAG_ENTRYTAGPREFIX+entry.getEntry_id());
 		} else {
 			if(C.VERBOSE){Log.d(C.TAG,"Entry didn't load");}
-			activity.showError();
+			activity.showError(entry.getError());
 		}
 		//this.show(activity.getSupportFragmentManager(),DFragmentLoading.TAG_ENTRYTAGPREFIX+entry.getEntry_id());
 	}
