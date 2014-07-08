@@ -45,7 +45,12 @@ public class BlipView extends BlipAPI{
 				caller.addParameter("secret",extras.getString("SECRET"));
 				caller.addParameter("signature",extras.getString("SIGNA"));
 				_updateView(caller, view, max, size, color);			
-			}			
+			}	
+			
+			@Override
+			public void showError() {
+				//FIXME unimplemented		
+			}
 		}
 
 		

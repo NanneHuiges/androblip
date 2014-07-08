@@ -442,7 +442,7 @@ public class DFragmentEntry extends DialogFragment implements iAPIResultFragment
 			activity.addFragment(this, DFragmentLoading.TAG_ENTRYTAGPREFIX+entry.getEntry_id());
 		} else {
 			if(C.VERBOSE){Log.d(C.TAG,"Entry didn't load");}
-			activity.failed();
+			activity.showError();
 		}
 		//this.show(activity.getSupportFragmentManager(),DFragmentLoading.TAG_ENTRYTAGPREFIX+entry.getEntry_id());
 	}
@@ -504,5 +504,10 @@ public class DFragmentEntry extends DialogFragment implements iAPIResultFragment
 			favspinner.setVisibility(View.GONE);
 			break;
 		}
+	}
+	
+	@Override
+	public void showError() {
+		//FIXME unimplemented		
 	}
 }

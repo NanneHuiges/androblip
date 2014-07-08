@@ -49,4 +49,9 @@ public class BlipPostComment extends BlipAPI implements iAPIResultReceiver {
 		
 	}
 	
+	@Override
+	public void showError() {
+		//FIXME unimplemented		
+	}
+	
 }

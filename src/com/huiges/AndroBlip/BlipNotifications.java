@@ -166,4 +166,8 @@ public class BlipNotifications implements iAPIResultReceiver{
 		}
 	}
 
+	@Override
+	public void showError() {
+	//FIXME unimplemented	
+	}
 }

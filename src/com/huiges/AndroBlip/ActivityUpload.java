@@ -314,7 +314,11 @@ public class ActivityUpload extends FragmentActivity implements iAPIResultReceiv
 		}
 	}
 
-
+	@Override
+	public void showError() {
+		//FIXME unimplemented		
+	}
+	
 	@Override
 	public void onDateSet(DatePicker view, int year, int monthOfYear,
 			int dayOfMonth) {

@@ -133,6 +133,11 @@ public class BlipNonce extends BlipAPI implements iAPIResultReceiver{
 		//nonceReceiver.signal(signalId);
 	}
 	
+	@Override
+	public void showError() {
+		//FIXME unimplemented		
+	}
+	
 	/**
 	 * From 'Jasim' code (GPL)
 	 * http://bit.ly/9pmfzp

@@ -154,4 +154,9 @@ public class DFragmentAccount extends DialogFragment implements iAPIResultReceiv
 		
 		
 	}
+	
+	@Override
+	public void showError() {
+		//FIXME unimplemented		
+	}
 }

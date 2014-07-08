@@ -73,6 +73,11 @@ public class BlipPostImage extends BlipAPI implements iAPIResultReceiver {
 		
 	}
 	
+	@Override
+	public void showError() {
+		//FIXME unimplemented		
+	}
+	
 	//todo
 	public static Bundle parseResult(Bundle extras){
 		String resultS = extras.getString(APICaller.RESULT);
