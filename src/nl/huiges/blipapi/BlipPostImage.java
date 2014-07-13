@@ -3,20 +3,22 @@ package nl.huiges.blipapi;
 import nl.huiges.apicaller.APICaller;
 import nl.huiges.apicaller.SimpleCaller;
 import nl.huiges.apicaller.iAPIResultReceiver;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.huiges.AndroBlip.R;
-
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 
+import com.huiges.AndroBlip.R;
+
+/**
+ * Make an API call to send an image to blipfoto.
+ * First make a call to receive a nonce, then 
+ * post the image and send the result back to the 
+ * caller via the iAPIResultReceiver.
+ *
+ */
 public class BlipPostImage extends BlipAPI implements iAPIResultReceiver {
 	private Context context;
 	private iAPIResultReceiver receiver;
@@ -27,6 +29,17 @@ public class BlipPostImage extends BlipAPI implements iAPIResultReceiver {
 		this.context = context;
 	}
 	
+	
+	/**
+	 * Posts an image to blipfoto. 
+	 * First retrieves a nonce with 'this' as receiver.
+	 * When result comes back (this.signal), the receivers'
+	 * signal is called.
+	 * 
+	 * @param imageUri
+	 * @param receiver the receiver we call .signal on in the end
+	 * @param signal signal id for the receiver
+	 */
 	public void PostEntry(Uri imageUri, iAPIResultReceiver receiver, int signal ){
     	this.receiver= receiver; 
     	this.signal = signal;
@@ -72,7 +85,7 @@ public class BlipPostImage extends BlipAPI implements iAPIResultReceiver {
 		try {
 			caller.addFilePath(getRealPathFromURI(imageUri));
 		} catch (Exception e) {
-			showError("Could not find image ;(");
+			showError(context.getResources().getString(R.string.error_upload_noimage));
 			return;
 		}
 		caller.execute();	
@@ -86,73 +99,6 @@ public class BlipPostImage extends BlipAPI implements iAPIResultReceiver {
 	@Override
 	public void showError(CharSequence message) {
 		receiver.showError(message);	
-	}
-	
-	/**
-	 * API code (iApiResultReceiver) makes the result 
-	 * go straight to the receiver's signal function
-	 * 
-	 * This is unfortunate as we want to parse it first
-	 * and have the parsing be done by this object. 
-	 * 
-	 * Quick fix was below static function
-	 * @todo call receivers signal function with parsed bundle
-	 * 
-	 * @param extras result bundle as received from API call
-	 * @return parsed bundle
-	 */
-	public static Bundle parseResult(Bundle extras, Resources res){
-		String resultS = extras.getString(APICaller.RESULT);
-		JSONObject entryO=null;
-
-		Bundle result = new Bundle();
-		
-		try {
-			entryO = new JSONObject(resultS);
-		// } catch (JSONException | NullPointerException e1) { java 7 says hi
-		} catch (JSONException e1) {
-			result.putBoolean("error", true);
-			result.putString("resultText",res.getString(R.string.error_upload_unknown));
-			return result;
-		} catch ( NullPointerException e1) {
-			result.putBoolean("error", true);
-			result.putString("resultText",res.getString(R.string.error_upload_network));
-			return result;
-		}
-		
-		String resultText = "";
-		boolean error = false;
-		if(entryO != null){
-			JSONObject jso = null;
-			try {
-				jso = (JSONObject) entryO.getJSONObject("error");
-			} catch (JSONException e1) {}
-
-			if (jso != null){
-				try {
-					resultText = jso.getString("message");
-				} catch (JSONException e) {
-					resultText = res.getString(R.string.error_blipfoto_empty);
-				}
-				result.putBoolean("error", true);
-				result.putString("resultText",resultText);
-				return result;
-				
-			}else{
-				//geen error. hopelijk wel data dan.
-				try {
-					JSONObject data = (JSONObject) entryO.getJSONObject("data");
-					resultText  = data.getString("message");
-				} catch (JSONException e) {
-					error = true;
-					resultText = res.getString(R.string.error_blipfoto_unsure);
-				}
-			}
-		}
-		
-		result.putBoolean("error", error);
-		result.putString("resultText",resultText);
-		return result;
 	}
 	
 }

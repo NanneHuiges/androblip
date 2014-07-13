@@ -8,7 +8,7 @@
     <string name="error_upload_network">Uploading didn\'t work out :(.\nCould be a network issue?</string>
     <string name="error_blipfoto_empty">Blipfoto send an error but without a message.\nStrange!</string>
     <string name="error_blipfoto_unsure">No message after uploading.\nUnsure what\'s going on</string>
-    
+    <string name="error_upload_noimage">Could not find image ;(</string>
     
     <string name="app_name">AndroBlip</string>
     <string name="action_settings">Settings</string>

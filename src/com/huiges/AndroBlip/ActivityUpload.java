@@ -281,22 +281,20 @@ public class ActivityUpload extends FragmentActivity implements iAPIResultReceiv
 			}	
 			break;
 		case SIGNAL_POST:
-			FormattedTextView resultV = (FormattedTextView) findViewById(R.id.postEntryResult);
-			Bundle parsedExtras1 = BlipPostEntry.parseResult(extras);
-			resultV.setText(parsedExtras1.getString("resultText"+getResources().getString(R.string.result_unknown)));
-			resultV.setVisibility(View.VISIBLE);
-			//als error, dismiss en go back, re-enable stufs, scroll to terror.
+			Bundle parsedExtras1 = BlipPostEntry.parseResult(extras, getResources());
 			if(parsedExtras1.getBoolean("error",true)){
-				showError(parsedExtras1.getString("resultText","??"));
+				showError(parsedExtras1.getString("resultText") );
 			}else{
-				if(C.VERBOSE){Log.d(C.TAG,"niet error "+parsedExtras1.getString("resultText","??"));}
+				FormattedTextView resultV = (FormattedTextView) findViewById(R.id.postEntryResult);
+				resultV.setText(parsedExtras1.getString("resultText"+getResources().getString(R.string.result_unknown)));
+				resultV.setVisibility(View.VISIBLE);
 				if (!(loadingFragment == null) ){
 					loadingFragment.dismiss();	
 				}
 				autoSaver.clearAutoSave();
 				posted = true;
 				finish();//TODO: load default acitivty?
-			}
+			}	
 			break;
 		}
 	}
