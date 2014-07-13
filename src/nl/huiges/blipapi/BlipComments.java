@@ -77,6 +77,11 @@ public class BlipComments extends BlipAPI implements iAPIResultReceiver {
 		}
 	}
 
+	/**
+	 * @todo errors to resource string?
+	 * @param extras
+	 * @return
+	 */
 	private Bundle parseResult(Bundle extras){
 		if(extras == null){
 			if(C.VERBOSE){Log.d(C.TAG,"extras is null. not good.");}
@@ -133,6 +138,6 @@ public class BlipComments extends BlipAPI implements iAPIResultReceiver {
 
 	@Override
 	public void showError(CharSequence message) {
-		//FIXME unimplemented		
+		application.showError(message);
 	}
 }

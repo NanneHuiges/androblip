@@ -72,7 +72,7 @@ public class BlipEntry extends BlipAPI implements iAPIResultReceiver {
 	
 	@Override
 	public void showError(CharSequence message) {
-		//FIXME unimplemented		
+		application.showError(message);
 	}
 	
 }

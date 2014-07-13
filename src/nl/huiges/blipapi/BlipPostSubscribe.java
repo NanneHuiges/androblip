@@ -50,6 +50,6 @@ public class BlipPostSubscribe extends BlipAPI implements iAPIResultReceiver{
 	
 	@Override
 	public void showError(CharSequence message) {
-		//FIXME unimplemented		
+		receiver.showError(message);
 	}
 }

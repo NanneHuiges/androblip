@@ -82,13 +82,12 @@ public class BlipNonce extends BlipAPI implements iAPIResultReceiver{
     		SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
     		nonce = new BigInteger(160, sr).toString(32);
     	} catch (NoSuchAlgorithmException e) {
-    		nonce = "";
+    		showError("Error calculating nonce");
+    		return; 
     	}
     	
     	long timeStamp = ( (new Date()).getTime() / 1000)
-    					+ sharedPref.getLong(FragmentPreference.PREFKEY_TIMESTAMPDIFF, 0);
-		
-    	
+    			+ sharedPref.getLong(FragmentPreference.PREFKEY_TIMESTAMPDIFF, 0);
     	
 	    String signature = BlipNonce.digest(timeStamp+nonce+token+secret);
 	    Bundle bundle = new Bundle();
@@ -129,13 +128,11 @@ public class BlipNonce extends BlipAPI implements iAPIResultReceiver{
     		calcSignature(token,secret);
 			break;			
 		}
-		
-		//nonceReceiver.signal(signalId);
 	}
 	
 	@Override
 	public void showError(CharSequence message) {
-		//FIXME unimplemented		
+		nonceReceiver.showError(message);
 	}
 	
 	/**

@@ -139,10 +139,9 @@ public class BlipNotifications implements iAPIResultReceiver{
 	public void signal(int signalId, Bundle extras) {
 		if(C.VERBOSE){Log.d(C.TAG, "blipnotifications: singal");}
 		if(C.VERBOSE){Log.d(C.TAG, "result: "+extras.getString(APICaller.RESULT));}
-		//{"version":3,"request_id":null,"error":null,"data":[{"comment_id":"24276917","parent_id":null,"entry_id":"3917542","timestamp":1391852546,"display_name":"nh","content":"Lets see if we can retrieve this new comment in a notification...","thumbnail":"http:\/\/static.blipfotos.com\/thumbs\/g12\/127010\/2014\/big\/color\/19389826752e52ba9289800.60409353.jpeg","icons":["camera-green.gif","founder.gif"],"reply":1,"unread":1}]}
 
 		if(extras.getBoolean(BlipComments.ERROR)){
-			extras.getString(BlipComments.ERRORSTRING);
+			showError(extras.getString(BlipComments.ERRORSTRING));
 		}else{	
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 			SharedPreferences.Editor editor = prefs.edit();
