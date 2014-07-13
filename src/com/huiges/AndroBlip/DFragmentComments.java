@@ -87,7 +87,7 @@ public class DFragmentComments extends DialogFragment implements iAPIResultRecei
 	}
 	
 	@Override
-	public void showError() {
+	public void showError(CharSequence message) {
 		//FIXME unimplemented		
 	}
 }

@@ -74,7 +74,7 @@ public class BlipPostImage extends BlipAPI implements iAPIResultReceiver {
 	}
 	
 	@Override
-	public void showError() {
+	public void showError(CharSequence message) {
 		//FIXME unimplemented		
 	}
 	

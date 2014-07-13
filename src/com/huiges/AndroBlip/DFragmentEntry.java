@@ -507,7 +507,7 @@ public class DFragmentEntry extends DialogFragment implements iAPIResultFragment
 	}
 	
 	@Override
-	public void showError() {
+	public void showError(CharSequence message) {
 		//FIXME unimplemented		
 	}
 }

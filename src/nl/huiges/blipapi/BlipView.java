@@ -48,7 +48,7 @@ public class BlipView extends BlipAPI{
 			}	
 			
 			@Override
-			public void showError() {
+			public void showError(CharSequence message) {
 				//FIXME unimplemented		
 			}
 		}

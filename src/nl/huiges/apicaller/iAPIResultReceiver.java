@@ -21,6 +21,7 @@ public interface iAPIResultReceiver {
 	/**
 	 * Handles an error situation.
 	 * (no network, unexpected result, etc)
+	 * @param message TODO
 	 */
-	public void showError();
+	public void showError(CharSequence message);
 }

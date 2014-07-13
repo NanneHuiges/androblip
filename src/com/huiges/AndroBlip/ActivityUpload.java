@@ -315,7 +315,7 @@ public class ActivityUpload extends FragmentActivity implements iAPIResultReceiv
 	}
 
 	@Override
-	public void showError() {
+	public void showError(CharSequence message) {
 		//FIXME unimplemented		
 	}
 	
