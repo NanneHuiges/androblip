@@ -268,28 +268,28 @@ public class ActivityUpload extends FragmentActivity implements iAPIResultReceiv
 	public void signal(int signalId, Bundle extras) {
 		switch (signalId){
 		case SIGNAL_UPLOADED:			
-			Bundle parsedExtras = BlipPostImage.parseResult(extras);
+			Bundle parsedExtras = BlipPostImage.parseResult(extras, getResources());
 			if(parsedExtras.getBoolean("error",true)){
 				((ImageView)findViewById(R.id.preview_image))
 					.setVisibility(View.GONE);
-				showError(parsedExtras.getString("resultText","Image not uploaded") );
+				showError(parsedExtras.getString("resultText") );
 			}else{
 				findViewById(R.id.uploadProgress).setVisibility(View.GONE);
 				findViewById(R.id.button_sendblip).setVisibility(View.VISIBLE);
 				((TextView)findViewById(R.id.currentAction))
-					.setText("Image Uploaded, ready to blip");				
+					.setText(getResources().getString(R.string.image_uploaded));				
 			}	
 			break;
 		case SIGNAL_POST:
 			FormattedTextView resultV = (FormattedTextView) findViewById(R.id.postEntryResult);
 			Bundle parsedExtras1 = BlipPostEntry.parseResult(extras);
-			resultV.setText(parsedExtras1.getString("resultText","Unknown result"));
+			resultV.setText(parsedExtras1.getString("resultText"+getResources().getString(R.string.result_unknown)));
 			resultV.setVisibility(View.VISIBLE);
 			//als error, dismiss en go back, re-enable stufs, scroll to terror.
 			if(parsedExtras1.getBoolean("error",true)){
-				showError(parsedExtras1.getString("resultText","Unknown result"));
+				showError(parsedExtras1.getString("resultText","??"));
 			}else{
-				if(C.VERBOSE){Log.d(C.TAG,"niet error "+parsedExtras1.getString("resultText","Unknown result"));}
+				if(C.VERBOSE){Log.d(C.TAG,"niet error "+parsedExtras1.getString("resultText","??"));}
 				if (!(loadingFragment == null) ){
 					loadingFragment.dismiss();	
 				}
@@ -303,6 +303,7 @@ public class ActivityUpload extends FragmentActivity implements iAPIResultReceiv
 
 	@Override
 	public void showError(CharSequence message) {
+		message = message.toString().isEmpty() ? getResources().getString(R.string.error_unknown) : message;
 		if(C.VERBOSE){Log.e(C.TAG,"showError: error = "+message);}
 		findViewById(R.id.uploadProgress).setVisibility(View.GONE);
 		FormattedTextView resultV = (FormattedTextView) findViewById(R.id.postEntryResult);

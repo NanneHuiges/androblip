@@ -1,75 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
-        <string name="action_test">Test</string>
-    
-    
 
+    <string name="error_unknown">unknown error</string>
+    <string name="result_unknown">unknown result</string>
+    <string name="image_uploaded">Image Uploaded, ready to blip</string>
+    <string name="error_upload_unknown">Uploading didn\'t work out, unsure why :(</string>
+    <string name="error_upload_network">Uploading didn\'t work out :(.\nCould be a network issue?</string>
+    <string name="error_blipfoto_empty">Blipfoto send an error but without a message.\nStrange!</string>
+    <string name="error_blipfoto_unsure">No message after uploading.\nUnsure what\'s going on</string>
+    
+    
     <string name="app_name">AndroBlip</string>
     <string name="action_settings">Settings</string>
     <string name="title_all">everything</string>
     <string name="title_spot">spotlight</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    
     <string name="formlabel_comment">Comment:</string>
-	<string name="formcomment_hint">Type your comment</string>
+    <string name="formcomment_hint">Type your comment</string>
+    <string name="autosavemsg">Autosave available, click to use</string>
+    <string name="defaultdatemsg">Using date from picture</string>
 
-	<string name="autosavemsg">Autosave available, click to use</string>
-	<string name="defaultdatemsg">Using date from picture</string>
-		
-	<!-- preferences -->
+    <!-- preferences -->
     <string name="pref_usedisccache">Cache images (disc)</string>
     <string name="pref_usedisccache_sum">Uncheck this only if you have disc-space-issues.</string>
     <string name="pref_usememcache">Cache images (memory)</string>
     <string name="pref_usememcache_sum">Uncheck this only if you have memory-issues.</string>
-   
     <string name="pref_order">Set views order</string>
     <string name="pref_order_sum">Drag the views around.</string>
-    
     <string name="pref_notifycomment">Notify me of comments</string>
     <string name="pref_notifycomment_sum">Uncheck if you don&quot;t like bliplove.</string>
-    
     <string name="pref_useautosave">Autosave on upload</string>
     <string name="pref_useautosave_sum">Checked means: use the autosave feature for uploads</string>
-    
-    
     <string name="pref_markasread">Mark comments as read</string>
     <string name="pref_markasread_sum">When opening the comments view</string>
-    
-    
-    
     <string name="title_activity_preferences">Preferences</string>
     <string name="title_activity_upload">AndroBlip upload</string>
-
     <string name="pick_date">Custom date</string>
-	<string name="button_sendblip">Blip!</string>
-    
-	<string name="subscribeimage">subscribe toggle</string>
-	<string name="favouriteimage">favourite entry!</string>
-	
+    <string name="button_sendblip">Blip!</string>
+    <string name="subscribeimage">subscribe toggle</string>
+    <string name="favouriteimage">favourite entry!</string>
     <string name="title_newcomments">New(ish) Comments</string>
-		
-	
-	<string name="action_newcomments">TITLE GOES HERE</string>
-    
-	<string name="basurl_icons" >http://www.blipfoto.com/_images/user_icons/</string>
-	
+    <string name="action_newcomments">TITLE GOES HERE</string>
+    <string name="basurl_icons">http://www.blipfoto.com/_images/user_icons/</string>
+
     <!-- LOGGING IN -->
-   <string name="login_bulletexplain"><![CDATA[<br/>
+    <string name="login_bulletexplain">
+<![CDATA[<br/>
 1. <a href="http://www.blipfoto.com/getpermission/v3/493790">Let blipfoto know</a> you use Androblip<br/>
 2. Copy the 6-char code from the site<br/>
 3. Type it below<br/>
 4. ...<br/>
 5. Profit!<br/>
-]]></string>
-
-      <string name="login_moreinfo"><![CDATA[<br/>
+]]>
+    </string>
+    <string name="login_moreinfo">
+<![CDATA[<br/>
 You can get the code on any device by the way. Just go to 
 <a href="http://www.blipfoto.com/getpermission/v3/493790">http://www.blipfoto.com/getpermission/v3/493790</a>
 on your phone, tablet, computer, fridge or other internet-capable device! Then type the code you get there in the field above :)
-]]></string>
-   
-   <string name="login_button">Go!</string>
-    
+]]>
+    </string>
+    <string name="login_button">Go!</string>
+
 </resources>

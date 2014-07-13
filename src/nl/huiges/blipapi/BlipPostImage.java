@@ -7,8 +7,11 @@ import nl.huiges.apicaller.iAPIResultReceiver;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.huiges.AndroBlip.R;
+
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -98,7 +101,7 @@ public class BlipPostImage extends BlipAPI implements iAPIResultReceiver {
 	 * @param extras result bundle as received from API call
 	 * @return parsed bundle
 	 */
-	public static Bundle parseResult(Bundle extras){
+	public static Bundle parseResult(Bundle extras, Resources res){
 		String resultS = extras.getString(APICaller.RESULT);
 		JSONObject entryO=null;
 
@@ -109,11 +112,11 @@ public class BlipPostImage extends BlipAPI implements iAPIResultReceiver {
 		// } catch (JSONException | NullPointerException e1) { java 7 says hi
 		} catch (JSONException e1) {
 			result.putBoolean("error", true);
-			result.putString("resultText","Uploading didn't work out, unsure why :(");
+			result.putString("resultText",res.getString(R.string.error_upload_unknown));
 			return result;
 		} catch ( NullPointerException e1) {
 			result.putBoolean("error", true);
-			result.putString("resultText","Uploading didn't work out :(.\n Could be a network issue?");
+			result.putString("resultText",res.getString(R.string.error_upload_network));
 			return result;
 		}
 		
@@ -129,7 +132,7 @@ public class BlipPostImage extends BlipAPI implements iAPIResultReceiver {
 				try {
 					resultText = jso.getString("message");
 				} catch (JSONException e) {
-					resultText = "Blipfoto send an error but without a message. Strange!";
+					resultText = res.getString(R.string.error_blipfoto_empty);
 				}
 				result.putBoolean("error", true);
 				result.putString("resultText",resultText);
@@ -142,7 +145,7 @@ public class BlipPostImage extends BlipAPI implements iAPIResultReceiver {
 					resultText  = data.getString("message");
 				} catch (JSONException e) {
 					error = true;
-					resultText = "No message after uploading.\n Unsure what's going on";
+					resultText = res.getString(R.string.error_blipfoto_unsure);
 				}
 			}
 		}
