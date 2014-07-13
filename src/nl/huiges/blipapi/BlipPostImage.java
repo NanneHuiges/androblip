@@ -23,8 +23,8 @@ public class BlipPostImage extends BlipAPI implements iAPIResultReceiver {
 	public BlipPostImage(Context context){
 		this.context = context;
 	}
-	public  void PostEntry(Uri imageUri, iAPIResultReceiver receiver, int signal ){
-    	
+	
+	public void PostEntry(Uri imageUri, iAPIResultReceiver receiver, int signal ){
     	this.receiver= receiver; 
     	this.signal = signal;
     	this.imageUri = imageUri;
@@ -34,7 +34,7 @@ public class BlipPostImage extends BlipAPI implements iAPIResultReceiver {
 	}
 	
 	
-	public  String getRealPathFromURI(Uri uri) throws Exception {
+	private String getRealPathFromURI(Uri uri) throws Exception {
 		String scheme = uri.getScheme();
 		if(scheme.equals("file")){
 			return uri.getPath();
@@ -49,11 +49,16 @@ public class BlipPostImage extends BlipAPI implements iAPIResultReceiver {
 		}
 		
 	}
+
+	/* (non-Javadoc)
+	 * @see nl.huiges.apicaller.iAPIResultReceiver#signal(int, android.os.Bundle)
+	 * 
+	 * Takes extras from BlipNonce call and calls the actual image post.
+	 */
 	@Override
 	public void signal(int signalId, Bundle extras) {
 		SimpleCaller caller = new SimpleCaller(receiver, signal,  APICaller.METHOD_POST, APICaller.SCHEME_HTTP,
     			server, "v3/image.json");
-		//		"192.168.178.2", "~nanne/testupload");
 		
 		caller.addParameter("timestamp", extras.getString("STAMP"));
 		caller.addParameter("nonce",extras.getString("NONCE"));
@@ -64,39 +69,56 @@ public class BlipPostImage extends BlipAPI implements iAPIResultReceiver {
 		try {
 			caller.addFilePath(getRealPathFromURI(imageUri));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return; //TODO
+			showError("Could not find image ;(");
+			return;
 		}
-		
 		caller.execute();	
-		
 	}
 	
+	/* (non-Javadoc)
+	 * @see nl.huiges.apicaller.iAPIResultReceiver#showError(java.lang.CharSequence)
+	 * 
+	 * If lokal api call (blipnonce) generates an error, handle it by sending it on.
+	 */
 	@Override
 	public void showError(CharSequence message) {
-		//FIXME unimplemented		
+		receiver.showError(message);	
 	}
 	
-	//todo
+	/**
+	 * API code (iApiResultReceiver) makes the result 
+	 * go straight to the receiver's signal function
+	 * 
+	 * This is unfortunate as we want to parse it first
+	 * and have the parsing be done by this object. 
+	 * 
+	 * Quick fix was below static function
+	 * @todo call receivers signal function with parsed bundle
+	 * 
+	 * @param extras result bundle as received from API call
+	 * @return parsed bundle
+	 */
 	public static Bundle parseResult(Bundle extras){
 		String resultS = extras.getString(APICaller.RESULT);
 		JSONObject entryO=null;
-
-		String resultText = "unkown result";
-		boolean error = false;
 
 		Bundle result = new Bundle();
 		
 		try {
 			entryO = new JSONObject(resultS);
+		// } catch (JSONException | NullPointerException e1) { java 7 says hi
 		} catch (JSONException e1) {
-			error = true;
-			result.putBoolean("error", error);
-			result.putString("resultText",resultText);
+			result.putBoolean("error", true);
+			result.putString("resultText","Uploading didn't work out, unsure why :(");
+			return result;
+		} catch ( NullPointerException e1) {
+			result.putBoolean("error", true);
+			result.putString("resultText","Uploading didn't work out :(.\n Could be a network issue?");
 			return result;
 		}
 		
+		String resultText = "";
+		boolean error = false;
 		if(entryO != null){
 			JSONObject jso = null;
 			try {
@@ -104,11 +126,12 @@ public class BlipPostImage extends BlipAPI implements iAPIResultReceiver {
 			} catch (JSONException e1) {}
 
 			if (jso != null){
-				error = true;
 				try {
 					resultText = jso.getString("message");
-				} catch (JSONException e) {}
-				result.putBoolean("error", error);
+				} catch (JSONException e) {
+					resultText = "Blipfoto send an error but without a message. Strange!";
+				}
+				result.putBoolean("error", true);
 				result.putString("resultText",resultText);
 				return result;
 				
@@ -119,6 +142,7 @@ public class BlipPostImage extends BlipAPI implements iAPIResultReceiver {
 					resultText  = data.getString("message");
 				} catch (JSONException e) {
 					error = true;
+					resultText = "No message after uploading.\n Unsure what's going on";
 				}
 			}
 		}
