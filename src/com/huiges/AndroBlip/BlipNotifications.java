@@ -167,6 +167,7 @@ public class BlipNotifications implements iAPIResultReceiver{
 
 	@Override
 	public void showError(CharSequence message) {
-		//FIXME unimplemented		
+		if(C.VERBOSE){Log.d(C.TAG, "blipnotifications error "+message);}
+		// no body. there's really nothing much we can do I believe
 	}
 }

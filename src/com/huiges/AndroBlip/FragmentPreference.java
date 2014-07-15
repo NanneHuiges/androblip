@@ -71,9 +71,7 @@ public class FragmentPreference extends PreferenceFragment  {
 		String viewsString = sharedPref.getString(FragmentPreference.PREFKEY_BLIPVIEWORDER, sb.toString());
 		String[] views = viewsString.split(",");
 		ArrayList<String> list = new ArrayList<String>(Arrays.asList(views));
-		
-		if(C.VERBOSE){Log.d(C.TAG,list.toString());}
-		
+				
 		ArrayList<String> temp = new ArrayList<String>();
 		
 		if ( ! C.isLoggedIn(context) ){
@@ -88,7 +86,6 @@ public class FragmentPreference extends PreferenceFragment  {
 			}
 		}
 		list.addAll(temp);
-		if(C.VERBOSE){Log.d(C.TAG,list.toString());}
 		return list;
 	}
 	
