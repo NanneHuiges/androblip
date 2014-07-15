@@ -97,6 +97,19 @@
             style="@style/General.Layout.SeparatorEntry"
             android:layout_marginBottom="3sp" />
 
+        <com.huiges.AndroBlip.views.FormattedTextView
+            android:id="@+id/entry_fragment_error"
+            style="@style/General.Layout.Error"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/separator_comment_error"
+            style="@style/General.Layout.SeparatorEntry"
+            android:layout_marginBottom="3sp"
+            android:visibility="gone" />
+
         <LinearLayout
             style="@style/General.Layout"
             android:orientation="horizontal" >

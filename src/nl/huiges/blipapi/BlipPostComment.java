@@ -29,16 +29,12 @@ public class BlipPostComment extends BlipAPI implements iAPIResultReceiver {
 	public void signal(int signalId, Bundle extras) {
 		SimpleCaller caller = new SimpleCaller(receiver, signal,  APICaller.METHOD_POST, APICaller.SCHEME_HTTP,
     			server, "v3/comment.json");
-		//		"192.168.178.2", "~nanne/testupload");
 		
 		caller.addParameter("timestamp", extras.getString("STAMP"));
 		caller.addParameter("nonce",extras.getString("NONCE"));
 		caller.addParameter("token",extras.getString("TOKEN"));
 		caller.addParameter("secret",extras.getString("SECRET"));
-		caller.addParameter("signature",extras.getString("SIGNA"));
-		
-	
-		
+		caller.addParameter("signature",extras.getString("SIGNA"));	
 		caller.addParameter("entry_id", parameter_extras.getString("entry_id"));
 		caller.addParameter("reply_to_comment_id", parameter_extras.getString("reply_to_comment_id"));
 		caller.addParameter("comment", parameter_extras.getString("comment"));
