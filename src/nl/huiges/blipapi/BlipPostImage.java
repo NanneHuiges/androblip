@@ -3,10 +3,6 @@ package nl.huiges.blipapi;
 import nl.huiges.apicaller.APICaller;
 import nl.huiges.apicaller.SimpleCaller;
 import nl.huiges.apicaller.iAPIResultReceiver;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
@@ -14,6 +10,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 
+import com.huiges.AndroBlip.R;
+
+/**
+ * Make an API call to send an image to blipfoto.
+ * First make a call to receive a nonce, then 
+ * post the image and send the result back to the 
+ * caller via the iAPIResultReceiver.
+ *
+ */
 public class BlipPostImage extends BlipAPI implements iAPIResultReceiver {
 	private Context context;
 	private iAPIResultReceiver receiver;
@@ -23,8 +28,19 @@ public class BlipPostImage extends BlipAPI implements iAPIResultReceiver {
 	public BlipPostImage(Context context){
 		this.context = context;
 	}
-	public  void PostEntry(Uri imageUri, iAPIResultReceiver receiver, int signal ){
-    	
+	
+	
+	/**
+	 * Posts an image to blipfoto. 
+	 * First retrieves a nonce with 'this' as receiver.
+	 * When result comes back (this.signal), the receivers'
+	 * signal is called.
+	 * 
+	 * @param imageUri
+	 * @param receiver the receiver we call .signal on in the end
+	 * @param signal signal id for the receiver
+	 */
+	public void PostEntry(Uri imageUri, iAPIResultReceiver receiver, int signal ){
     	this.receiver= receiver; 
     	this.signal = signal;
     	this.imageUri = imageUri;
@@ -34,7 +50,7 @@ public class BlipPostImage extends BlipAPI implements iAPIResultReceiver {
 	}
 	
 	
-	public  String getRealPathFromURI(Uri uri) throws Exception {
+	private String getRealPathFromURI(Uri uri) throws Exception {
 		String scheme = uri.getScheme();
 		if(scheme.equals("file")){
 			return uri.getPath();
@@ -49,11 +65,16 @@ public class BlipPostImage extends BlipAPI implements iAPIResultReceiver {
 		}
 		
 	}
+
+	/* (non-Javadoc)
+	 * @see nl.huiges.apicaller.iAPIResultReceiver#signal(int, android.os.Bundle)
+	 * 
+	 * Takes extras from BlipNonce call and calls the actual image post.
+	 */
 	@Override
 	public void signal(int signalId, Bundle extras) {
 		SimpleCaller caller = new SimpleCaller(receiver, signal,  APICaller.METHOD_POST, APICaller.SCHEME_HTTP,
     			server, "v3/image.json");
-		//		"192.168.178.2", "~nanne/testupload");
 		
 		caller.addParameter("timestamp", extras.getString("STAMP"));
 		caller.addParameter("nonce",extras.getString("NONCE"));
@@ -64,63 +85,20 @@ public class BlipPostImage extends BlipAPI implements iAPIResultReceiver {
 		try {
 			caller.addFilePath(getRealPathFromURI(imageUri));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return; //TODO
+			showError(context.getResources().getString(R.string.error_upload_noimage));
+			return;
 		}
-		
 		caller.execute();	
-		
 	}
 	
-	//todo
-	public static Bundle parseResult(Bundle extras){
-		String resultS = extras.getString(APICaller.RESULT);
-		JSONObject entryO=null;
-
-		String resultText = "unkown result";
-		boolean error = false;
-
-		Bundle result = new Bundle();
-		
-		try {
-			entryO = new JSONObject(resultS);
-		} catch (JSONException e1) {
-			error = true;
-			result.putBoolean("error", error);
-			result.putString("resultText",resultText);
-			return result;
-		}
-		
-		if(entryO != null){
-			JSONObject jso = null;
-			try {
-				jso = (JSONObject) entryO.getJSONObject("error");
-			} catch (JSONException e1) {}
-
-			if (jso != null){
-				error = true;
-				try {
-					resultText = jso.getString("message");
-				} catch (JSONException e) {}
-				result.putBoolean("error", error);
-				result.putString("resultText",resultText);
-				return result;
-				
-			}else{
-				//geen error. hopelijk wel data dan.
-				try {
-					JSONObject data = (JSONObject) entryO.getJSONObject("data");
-					resultText  = data.getString("message");
-				} catch (JSONException e) {
-					error = true;
-				}
-			}
-		}
-		
-		result.putBoolean("error", error);
-		result.putString("resultText",resultText);
-		return result;
+	/* (non-Javadoc)
+	 * @see nl.huiges.apicaller.iAPIResultReceiver#showError(java.lang.CharSequence)
+	 * 
+	 * If lokal api call (blipnonce) generates an error, handle it by sending it on.
+	 */
+	@Override
+	public void showError(CharSequence message) {
+		receiver.showError(message);	
 	}
 	
 }

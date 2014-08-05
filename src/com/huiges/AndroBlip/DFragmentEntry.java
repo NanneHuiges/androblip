@@ -2,9 +2,6 @@ package com.huiges.AndroBlip;
 
 import java.util.Iterator;
 
-import com.huiges.AndroBlip.views.FormattedTextView;
-import com.huiges.AndroBlip.views.ResizeImageView;
-import com.huiges.AndroBlip.R;
 import nl.huiges.apicaller.APICaller;
 import nl.huiges.apicaller.iAPIResultFragment;
 import nl.huiges.apicaller.iAPIResultFragmentReceiver;
@@ -14,7 +11,6 @@ import nl.huiges.blipapi.BlipPostComment;
 import nl.huiges.blipapi.EntryCommentWAO;
 import nl.huiges.blipapi.EntryWAO;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
@@ -23,6 +19,8 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -43,8 +41,15 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.huiges.AndroBlip.views.FormattedTextView;
+import com.huiges.AndroBlip.views.ResizeImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+/**
+ * Fragment for blipfoto entry.
+ * Based on dialog, so behaves as 'popup'
+ *
+ */
 public class DFragmentEntry extends DialogFragment implements iAPIResultFragment, iAPIResultReceiver{
 	private EntryWAO entry;
 	private ScrollView mainView;
@@ -74,10 +79,18 @@ public class DFragmentEntry extends DialogFragment implements iAPIResultFragment
 		dismissableFragmentTag = disTag;
 	}
 
+	/**
+	 * Calls setviews, fillviews and addlisterens to
+	 * first: set all the view fields to their actual Views.
+	 * then: fill these views with the needed content
+	 * third: add listeners to whoever needs them.
+	 * Finally, set no_title, remove other (loading) diags
+	 * and return the main view.
+	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		if(C.VERBOSE){Log.d(C.TAG,"onCreateView");}
+		if(C.VERBOSE){Log.d(C.TAG,"onCreateView dfragmententry");}
 		setRetainInstance(true);
 		this.inflater = inflater;
 		this.container = container;
@@ -90,22 +103,20 @@ public class DFragmentEntry extends DialogFragment implements iAPIResultFragment
 	}
 
 	@Override
-	public void onResume(){
-		super.onResume();
-		if(C.VERBOSE){Log.d(C.TAG,"onResume");}
-
-	}
-	
-	@Override
 	public void onDestroyView() {
-	  if (getDialog() != null && getRetainInstance())
+	  if (getDialog() != null && getRetainInstance()){
 	    getDialog().setOnDismissListener(null);
+	  }
 	  super.onDestroyView();
 	}
 	
+	/**
+	 * Dismiss all sorts of unwanted dialogs. Like loading dialogs.
+	 */
 	private void removeOtherDiags(){
-		 Fragment prev; 
-		 prev  = getActivity().getSupportFragmentManager().findFragmentByTag(DFragmentLoading.TAG_DEFAULTTAG);
+		 FragmentActivity acti = getActivity();
+		 FragmentManager fragman = acti.getSupportFragmentManager();
+		 Fragment prev = fragman.findFragmentByTag(DFragmentLoading.TAG_DEFAULTTAG);
 		if (prev != null) {
 			DialogFragment df = (DialogFragment) prev;
 			df.dismiss();
@@ -120,6 +131,14 @@ public class DFragmentEntry extends DialogFragment implements iAPIResultFragment
 		}
 	}
 
+	/**
+	 * Adds listeners to 
+	 * showComments
+	 * addComment
+	 * imageView
+	 * favourtie
+	 * subscribe
+	 */
 	private void addListeners(){
 		showComments.setOnClickListener(new OnClickListener() {			
 			@Override
@@ -168,8 +187,6 @@ public class DFragmentEntry extends DialogFragment implements iAPIResultFragment
 						extras.putString("comment", ((EditText) inflatedView.findViewById(R.id.formComment)).getText().toString() );
 
 						bpc.PostComment(extras, that, SIGNAL_POST);
-
-
 					}
 				});
 
@@ -207,7 +224,7 @@ public class DFragmentEntry extends DialogFragment implements iAPIResultFragment
 						if(C.VERBOSE){Log.d(C.TAG,"ontouch quick");}
 
 						DisplayMetrics dm = new DisplayMetrics();
-						getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+						getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm); // todo can give nullpointer?
 						int wPix = dm.widthPixels;
 						DFragmentLoading dfl;
 						if(event.getX() > wPix/2){
@@ -276,6 +293,12 @@ public class DFragmentEntry extends DialogFragment implements iAPIResultFragment
 	}
 
 
+	/**
+	 * bloated function showing the comments and it's nested commetns
+	 * @param comment
+	 * @param localContainer
+	 * @param replyToId
+	 */
 	private void showComment(final EntryCommentWAO comment, ViewGroup localContainer, Integer replyToId){
 		final Integer mReplyToId;
 		if(comment.getReply() == 1 ){
@@ -298,7 +321,7 @@ public class DFragmentEntry extends DialogFragment implements iAPIResultFragment
 
 		LinearLayout replyContainer = (LinearLayout) inflater.inflate(R.layout.entry_comment_reply_container, localContainer, false);
 		if(comment.getReplies() == null){
-			if(C.VERBOSE){Log.d(C.TAG,"null");}
+			if(C.VERBOSE){Log.d(C.TAG,"comment.getreplies returned null in dfragmententry");}
 		}
 
 		for(Iterator<EntryCommentWAO> i = comment.getReplies().iterator(); i.hasNext(); ) {
@@ -336,8 +359,7 @@ public class DFragmentEntry extends DialogFragment implements iAPIResultFragment
 							inflatedView.setVisibility(View.GONE);
 						}
 					});
-
-
+					
 					EditText commentForm = (EditText) inflatedComment.findViewById(R.id.formComment);
 					commentForm.requestFocus();
 					InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -345,13 +367,9 @@ public class DFragmentEntry extends DialogFragment implements iAPIResultFragment
 
 				}
 			});
-
-
 			LinearLayout addReplyContainer = (LinearLayout) inflatedComment.findViewById(R.id.entry_comment_replycontainer);
-
 			addReplyContainer.addView(addreply);
 		}
-
 		localContainer.addView(inflatedComment);
 	}
 
@@ -424,13 +442,17 @@ public class DFragmentEntry extends DialogFragment implements iAPIResultFragment
 
 	@Override
 	public void showFromResult(iAPIResultFragmentReceiver activity, String result) {
+		if(C.VERBOSE){Log.d(C.TAG,"Going to create from JSON: "+result);}
+
 		entry = new EntryWAO();
-		try {
-			entry.entryFromJSONString(result);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+		entry.entryFromJSONString(result);
+
+		if (! entry.hasError() ){
+			activity.addFragment(this, DFragmentLoading.TAG_ENTRYTAGPREFIX+entry.getEntry_id());
+		} else {
+			if(C.VERBOSE){Log.d(C.TAG,"Entry didn't load");}
+			activity.showError(entry.getError());
 		}
-		activity.addFragment(this, DFragmentLoading.TAG_ENTRYTAGPREFIX+entry.getEntry_id());
 		//this.show(activity.getSupportFragmentManager(),DFragmentLoading.TAG_ENTRYTAGPREFIX+entry.getEntry_id());
 	}
 
@@ -474,8 +496,9 @@ public class DFragmentEntry extends DialogFragment implements iAPIResultFragment
 					}
 				});
 
-			} catch (JSONException e) {
+			} catch (Exception e) {
 				if(C.VERBOSE){Log.d(C.TAG,"postcomment error: "+e);}
+				showError(getResources().getString(R.string.error_comment_network));
 			}			
 			break;
 		case SIGNAL_SUBS:
@@ -491,5 +514,14 @@ public class DFragmentEntry extends DialogFragment implements iAPIResultFragment
 			favspinner.setVisibility(View.GONE);
 			break;
 		}
+	}
+	
+	@Override
+	public void showError(CharSequence message) {
+		if(C.VERBOSE){Log.d(C.TAG,"showError in dFragmentEntry");}
+		((TextView)mainView.findViewById(R.id.entry_fragment_error)).setText(message);
+		//TODO: undo error?
+		((TextView)mainView.findViewById(R.id.entry_fragment_error)).setVisibility(View.VISIBLE);
+		((View)mainView.findViewById(R.id.separator_comment_error)).setVisibility(View.VISIBLE);
 	}
 }

@@ -85,4 +85,9 @@ public class DFragmentComments extends DialogFragment implements iAPIResultRecei
 		//TODO error
 		
 	}
+	
+	@Override
+	public void showError(CharSequence message) {
+		//FIXME unimplemented		
+	}
 }

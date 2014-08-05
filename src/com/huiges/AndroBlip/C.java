@@ -9,24 +9,39 @@ import android.preference.PreferenceManager;
 /**
  * Constants class.
  * Not sure if good practice, but works.
- *
- * FILL IN THE KEY/SECRET!
  */
 public class C {
-	
-
-	
-
 	private static Typeface georgiaTypeface; 
 
+
+	/**
+	 * Tag for use in Log.? calls.
+	 */
 	public static String TAG 		 = "AndroBlip";
+	
+	/**
+	 * Loglevel value. Based on this value the
+	 * constants VERBOSE, DEBUG or MIN are true/false
+	 */
 	public static int LOGLVL 		 = 0;
+	
+	/**
+	 * Loglevel constants: true/false based on LOGLVL value.
+	 */
 	public static boolean VERBOSE 	 = LOGLVL > 10;
 	public static boolean DEBUG   	 = LOGLVL > 5;
 	public static boolean MIN     	 = LOGLVL > 0;
 
+	/**
+	 * Maximum age the timestamp used for connection with blipfoto
+	 */
 	public static long MAX_STAMP_AGE = 60*60;
 
+	/**
+	 * Returns the used typeface
+	 * @param ctx context used to call createFromAsset on
+	 * @return the george typeface used in the app
+	 */
 	public static final Typeface Georgia(Context ctx) { 
 		if (georgiaTypeface == null) { 
 			georgiaTypeface = Typeface.createFromAsset(ctx.getAssets(), "fonts/Georgia.ttf"); 
@@ -34,11 +49,21 @@ public class C {
 		return georgiaTypeface; 
 	}
 
+	/**
+	 * Checks through the preferences if user is logged in.
+	 * @param context
+	 * @return true if the user is logged in
+	 */
 	public static boolean isLoggedIn(Context context){
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
 		return sharedPref.getBoolean(FragmentPreference.PREFKEY_LOGGEDIN, false);		
 	}
 
+	/**
+	 * Gets the frequency from the settings
+	 * @param context
+	 * @return the frequency in milliseconds
+	 */
 	public static long getNotifyFrequency(Context context){
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
 		int freq;

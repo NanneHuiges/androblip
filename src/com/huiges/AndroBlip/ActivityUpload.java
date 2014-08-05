@@ -6,11 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-
-import com.huiges.AndroBlip.views.FormattedTextView;
-import com.huiges.AndroBlip.R;
-
-import nl.huiges.apicaller.APICaller;
 import nl.huiges.apicaller.iAPIResultReceiver;
 import nl.huiges.blipapi.BlipPostEntry;
 import nl.huiges.blipapi.BlipPostImage;
@@ -39,6 +34,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.huiges.AndroBlip.views.FormattedTextView;
+
 /**
  * Upload an image. Receives and handles the API's result after the call.
  * 
@@ -62,7 +59,7 @@ public class ActivityUpload extends FragmentActivity implements iAPIResultReceiv
 
 	View slideoutView;
 	AnimationListener animationOutListener;
-	protected DFragmentLoading dfl;
+	protected DFragmentLoading loadingFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -120,8 +117,8 @@ public class ActivityUpload extends FragmentActivity implements iAPIResultReceiv
 				//((Button) button).setVisibility(View.GONE);//get that out of the way for doubleclickers
 				disableEnableControls(false, (ViewGroup) findViewById(R.id.upload_form));
 
-				dfl = new DFragmentLoading();
-				dfl.show(getSupportFragmentManager(), DFragmentLoading.TAG_DEFAULTTAG);
+				loadingFragment = new DFragmentLoading();
+				loadingFragment.show(getSupportFragmentManager(), DFragmentLoading.TAG_DEFAULTTAG);
 
 				//TODO check for fileuri?
 				BlipPostEntry bpe = new BlipPostEntry(that);
@@ -270,51 +267,55 @@ public class ActivityUpload extends FragmentActivity implements iAPIResultReceiv
 	@Override
 	public void signal(int signalId, Bundle extras) {
 		switch (signalId){
-		case SIGNAL_UPLOADED:
-			// show message?
-			// replace spinner with button
-			
-			if(C.VERBOSE){Log.d(C.TAG,extras.getString(APICaller.RESULT));}
-			
-			Bundle parsedExtras = BlipPostImage.parseResult(extras);
+		case SIGNAL_UPLOADED:			
+			Bundle parsedExtras = BlipPostImage.parseResult(extras, getResources());
 			if(parsedExtras.getBoolean("error",true)){
-				//parsedExtras.getString("resultText","Unknown result"))
-				findViewById(R.id.uploadProgress).setVisibility(View.GONE);
-				((TextView)findViewById(R.id.currentAction)).setText(
-						parsedExtras.getString("resultText","Image not uploaded") );	
+				((ImageView)findViewById(R.id.preview_image))
+					.setVisibility(View.GONE);
+				showError(parsedExtras.getString("resultText") );
 			}else{
 				findViewById(R.id.uploadProgress).setVisibility(View.GONE);
 				findViewById(R.id.button_sendblip).setVisibility(View.VISIBLE);
-				((TextView)findViewById(R.id.currentAction)).setText("Image Uploaded, ready to blip");				
-			}
-			
-			
+				((TextView)findViewById(R.id.currentAction))
+					.setText(getResources().getString(R.string.image_uploaded));				
+			}	
 			break;
 		case SIGNAL_POST:
-			FormattedTextView resultV = (FormattedTextView) findViewById(R.id.postEntryResult);
-			Bundle parsedExtras1 = BlipPostEntry.parseResult(extras);
-			resultV.setText(parsedExtras1.getString("resultText","Unknown result"));
-			resultV.setVisibility(View.VISIBLE);
-			//als error, dismiss en go back, re-enable stufs, scroll to terror.
+			Bundle parsedExtras1 = BlipPostEntry.parseResult(extras, getResources());
 			if(parsedExtras1.getBoolean("error",true)){
-				if(C.VERBOSE){Log.d(C.TAG,"error "+parsedExtras1.getString("resultText","Unknown result"));}
-				disableEnableControls(true, (ViewGroup) findViewById(R.id.upload_form));
-				
-				//if dfl
-				dfl.dismiss();
-				
+				showError(parsedExtras1.getString("resultText") );
 			}else{
-				if(C.VERBOSE){Log.d(C.TAG,"niet error "+parsedExtras1.getString("resultText","Unknown result"));}
-				dfl.dismiss();
+				FormattedTextView resultV = (FormattedTextView) findViewById(R.id.postEntryResult);
+				resultV.setText(parsedExtras1.getString("resultText"+getResources().getString(R.string.result_unknown)));
+				resultV.setVisibility(View.VISIBLE);
+				if (!(loadingFragment == null) ){
+					loadingFragment.dismiss();	
+				}
 				autoSaver.clearAutoSave();
 				posted = true;
 				finish();//TODO: load default acitivty?
-			}
+			}	
 			break;
 		}
 	}
 
-
+	@Override
+	public void showError(CharSequence message) {
+		message = message.toString().isEmpty() ? getResources().getString(R.string.error_unknown) : message;
+		if(C.VERBOSE){Log.e(C.TAG,"showError: error = "+message);}
+		findViewById(R.id.uploadProgress).setVisibility(View.GONE);
+		FormattedTextView resultV = (FormattedTextView) findViewById(R.id.postEntryResult);
+		resultV.setText(message);
+		resultV.setVisibility(View.VISIBLE);
+				
+		disableEnableControls(true, (ViewGroup) findViewById(R.id.upload_form));
+		
+		if (!(loadingFragment == null) ){
+			loadingFragment.dismiss();	
+		}
+	
+	}
+	
 	@Override
 	public void onDateSet(DatePicker view, int year, int monthOfYear,
 			int dayOfMonth) {

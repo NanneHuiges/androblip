@@ -44,6 +44,8 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 /**
+ * Used to change view order in settings.
+ * 
  * The dynamic listview is an extension of listview that supports cell dragging
  * and swapping.
  *

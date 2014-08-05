@@ -13,8 +13,8 @@ import android.view.Window;
 
 public class DFragmentLoading extends DialogFragment  {
 
-	protected static final String TAG_DEFAULTTAG = "defaultfragmenttag";
-	protected static final String TAG_ENTRYTAGPREFIX = "entrytagprefix_";
+	public static final String TAG_DEFAULTTAG = "defaultfragmenttag";
+	public static final String TAG_ENTRYTAGPREFIX = "entrytagprefix_";
 
 	
 	@Override
