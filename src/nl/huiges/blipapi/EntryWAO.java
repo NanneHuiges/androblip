@@ -13,6 +13,9 @@ import android.text.Html;
 import android.text.Spannable;
 import android.text.Spanned;
 import android.text.style.URLSpan;
+import android.util.Log;
+
+import com.huiges.AndroBlip.C;
 
 /**
  * 
@@ -21,8 +24,8 @@ import android.text.style.URLSpan;
  * @author nanne
  *
  */
-		
-public class EntryWAO {
+
+public class EntryWAO {	
 	private String entry_id;//	The unique ID of the entry.	String
 	private String display_name;//	The display name of the entry's owner.	String
 	private String journal_title;//	The title of the entry owner's journal.	String
@@ -55,12 +58,14 @@ public class EntryWAO {
 	//comments
 	private List<EntryCommentWAO> comments;
 	private int commentsCount;
-	
-	
+
+
 	//ids
 	private String next;
 	private String prev;
-	
+	private boolean error;
+	private String errorString = "Unspecified error";
+
 	public String getEntry_id() {
 		return entry_id;
 	}
@@ -196,6 +201,19 @@ public class EntryWAO {
 		this.raw_description = raw_description;
 	}
 
+	public boolean hasError(){
+		return this.error;
+	}
+
+	public void setError(String errormsg){
+		this.error = true;
+		this.errorString = errormsg;
+	}
+
+	public String getError(){
+		return this.errorString;
+	}
+
 	/************start actions***************/
 	public boolean canComment(){
 		return this.comment == 1;
@@ -251,66 +269,91 @@ public class EntryWAO {
 		this.delete = delete;
 	}
 
-	
+
 	/************end actions***************/
 
-	public void entryFromJSONString(String result) throws JSONException {
-		JSONObject entryO = new JSONObject(result);
-		//TODO check if error.
-
-		JSONObject data = (JSONObject) entryO.getJSONObject("data");
-		setEntry_id(data.getString("entry_id"));
-		setDisplay_name(data.getString("display_name"));
-		setJournal_title(data.getString("journal_title"));
-		setMember(data.getInt("member"));
-		setDate(data.getString("date"));
-		setTitle(data.getString("title"));
-		setDescription(data.getString("description"));
-		setImage(data.getString("image"));
-		setLarge_image(data.getString("large_image"));
-		setThumbnail(data.getString("thumbnail"));
-		setURL(data.getString("url"));
-		setRating_total(data.getInt("rating_total"));
-		setRating_count(data.getInt("rating_count"));
-		//setTags(data.getString("tags"));
-		setViews(data.getInt("views"));
-
-		//TODO only if extended is actually requested?
-		if(data.has("extended") && data.getJSONObject("extended").has("raw_descripiton")){
-			setRaw_description(data.getJSONObject("extended").getString("raw_description"));
+	public void entryFromJSONString(String result)  {
+		if( result == null || result.isEmpty() ){
+			setError("Empty result: network issue?");
+			return;
 		}
 		
-		if(data.has("actions")){
-			JSONObject actions = data.getJSONObject("actions");
-			setComment(actions.getInt("comment"));
-			setComment_links(actions.getInt("comment_links"));
-			setSubscribe(actions.getInt("subscribe"));
-			setUnsubscribe(actions.getInt("unsubscribe"));
-			setFavourite(actions.getInt("favourite"));
-			setRate(actions.getInt("rate"));
-			setModify(actions.getInt("modify"));
-			setDelete(actions.getInt("delete"));
-		}
-
-		if(data.has("ids")){
-			JSONObject ids = data.getJSONObject("ids");
-			setNext(ids.getString("next"));
-			setPrev(ids.getString("previous"));
+		
+		JSONObject entryO;
+		try {
+			entryO = new JSONObject(result);
+		} catch (JSONException e) {
+			setError("Received data in unkown format.");
+			return;
 		}
 		
-		setComments(EntryCommentWAO.entryListFromJSONString(data));
+		JSONObject error = entryO.optJSONObject("error");
+		if( error != null){
+			String errormsg = error.optString("message");
+			if (errormsg.isEmpty()){
+				errormsg = "Blipfoto returned an empty error";
+			}
+			setError(errormsg);
+			return;	
+		}
 
-	}
+		
+		try {
+			JSONObject data = (JSONObject) entryO.getJSONObject("data");
+			setEntry_id(data.getString("entry_id"));
+			setDisplay_name(data.getString("display_name"));
+			setJournal_title(data.getString("journal_title"));
+			setMember(data.getInt("member"));
+			setDate(data.getString("date"));
+			setTitle(data.getString("title"));
+			setDescription(data.getString("description"));
+			setImage(data.getString("image"));
+			setLarge_image(data.getString("large_image"));
+			setThumbnail(data.getString("thumbnail"));
+			setURL(data.getString("url"));
+			setRating_total(data.getInt("rating_total"));
+			setRating_count(data.getInt("rating_count"));
+			//setTags(data.getString("tags"));
+			setViews(data.getInt("views"));
 	
+			//TODO only if extended is actually requested?
+			if(data.has("extended") && data.getJSONObject("extended").has("raw_descripiton")){
+				setRaw_description(data.getJSONObject("extended").getString("raw_description"));
+			}
+	
+			if(data.has("actions")){
+				JSONObject actions = data.getJSONObject("actions");
+				setComment(actions.getInt("comment"));
+				setComment_links(actions.getInt("comment_links"));
+				setSubscribe(actions.getInt("subscribe"));
+				setUnsubscribe(actions.getInt("unsubscribe"));
+				setFavourite(actions.getInt("favourite"));
+				setRate(actions.getInt("rate"));
+				setModify(actions.getInt("modify"));
+				setDelete(actions.getInt("delete"));
+			}
+	
+			if(data.has("ids")){
+				JSONObject ids = data.getJSONObject("ids");
+				setNext(ids.getString("next"));
+				setPrev(ids.getString("previous"));
+			}
+	
+			setComments(EntryCommentWAO.entryListFromJSONString(data));
+		} catch (JSONException e) {
+			if(C.VERBOSE){Log.d(C.TAG,"edrror");}
+		}
+	}
+
 	private void setComments(List<EntryCommentWAO> comments) {
 		this.comments=comments;
 		this.commentsCount = EntryCommentWAO.getCommentsCountFromList(comments);
 	}
-	
+
 	public List<EntryCommentWAO> getComments(){
 		return this.comments;
 	}
-	
+
 	public int getCommentsCount() {
 		return this.commentsCount;
 	}

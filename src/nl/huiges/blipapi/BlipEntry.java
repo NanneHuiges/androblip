@@ -70,5 +70,9 @@ public class BlipEntry extends BlipAPI implements iAPIResultReceiver {
 		caller.execute();
 	}
 	
+	@Override
+	public void showError(CharSequence message) {
+		application.showError(message);
+	}
 	
 }

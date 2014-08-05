@@ -36,7 +36,6 @@ public class NewCommentAdapter extends BaseAdapter {
 	}
 
 	public void Update(List<NewCommentWAO> newCommentItems){
-		if(C.VERBOSE){Log.d(C.TAG,"update");Log.d(C.TAG, newCommentItems.toString());}
 		this.newCommentItems = newCommentItems;
 		this.notifyDataSetChanged();
 	}
