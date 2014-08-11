@@ -4,7 +4,7 @@ AndroBlip
 Background
 --------------
 Androblip is an android application for blipfoto.com. The first version was written for Android 1.5, 
-justto make uploading images possible. When blipfoto released their own official app, new users
+just to make uploading images possible. When blipfoto released their own official app, new users
 and interest went down.
 
 At this moment, a new version of the API was released, and AndroBlip needed some love. It was either
