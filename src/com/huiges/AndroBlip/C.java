@@ -23,7 +23,7 @@ public class C {
 	 * Loglevel value. Based on this value the
 	 * constants VERBOSE, DEBUG or MIN are true/false
 	 */
-	public static int LOGLVL 		 = 11;
+	public static int LOGLVL 		 = 0;
 	
 	/**
 	 * Loglevel constants: true/false based on LOGLVL value.
