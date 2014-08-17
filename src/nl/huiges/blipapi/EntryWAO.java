@@ -308,14 +308,13 @@ public class EntryWAO {
 			setTitle(data.getString("title"));
 			setDescription(data.getString("description"));
 			setImage(data.getString("image"));
-			setLarge_image(data.getString("large_image"));
+			setLarge_image(data.optString("large_image"));
 			setThumbnail(data.getString("thumbnail"));
 			setURL(data.getString("url"));
-			setRating_total(data.getInt("rating_total"));
-			setRating_count(data.getInt("rating_count"));
+			setRating_total(data.optInt("rating_total"));
+			setRating_count(data.optInt("rating_count"));
 			//setTags(data.getString("tags"));
-			setViews(data.getInt("views"));
-	
+			setViews(data.optInt("views"));
 			//TODO only if extended is actually requested?
 			if(data.has("extended") && data.getJSONObject("extended").has("raw_descripiton")){
 				setRaw_description(data.getJSONObject("extended").getString("raw_description"));
@@ -335,13 +334,13 @@ public class EntryWAO {
 	
 			if(data.has("ids")){
 				JSONObject ids = data.getJSONObject("ids");
-				setNext(ids.getString("next"));
-				setPrev(ids.getString("previous"));
+				setNext(ids.optString("next"));
+				setPrev(ids.optString("previous"));
 			}
-	
 			setComments(EntryCommentWAO.entryListFromJSONString(data));
 		} catch (JSONException e) {
-			if(C.VERBOSE){Log.d(C.TAG,"edrror");}
+			if(C.VERBOSE){Log.e(C.TAG,"entry error ",e);}
+			setError("Er ging iets mis met laden van deze entry!");
 		}
 	}
 
