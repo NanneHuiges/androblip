@@ -83,7 +83,7 @@
                 <com.huiges.AndroBlip.views.FormattedTextView
                     android:id="@+id/formTagsLabel"
                     style="@style/General.Layout.Label"
-                    android:text="Tags (comma seperated):" />
+                    android:text="Tags (comma separated):" />
 
                 <EditText
                     android:id="@+id/formTags"
